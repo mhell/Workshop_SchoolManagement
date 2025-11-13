@@ -1,4 +1,4 @@
-package se.lexicon.doa;
+package se.lexicon.dao;
 
 import se.lexicon.model.Course;
 
@@ -11,5 +11,5 @@ public interface CourseDao {
     List<Course> findByName(String name);
     List<Course> findByDate(LocalDate date);
     List<Course> findAll();
-    boolean delete(Course student);
+    boolean delete(Course course);
 }
