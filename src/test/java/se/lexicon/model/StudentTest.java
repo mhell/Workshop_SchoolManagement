@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentTest {
-    int id = 0;
     String name = "name";
     String email = "name@gmail.com";
     String address = "Street 2, City";
@@ -14,7 +13,7 @@ class StudentTest {
 
     @BeforeEach
     void setUp() {
-        student = new Student(0, name, email, address);
+        student = new Student( name, email, address);
     }
 
     @Test
@@ -28,7 +27,7 @@ class StudentTest {
         String address = student.getAddress();
 
         // Assert
-        assertEquals(this.id, id, "id incorrect");
+        assertEquals(0, id, "id incorrect");
         assertEquals(this.name, name, "name incorrect");
         assertEquals(this.email, email, "email incorrect");
         assertEquals(this.address, address, "address incorrect");
