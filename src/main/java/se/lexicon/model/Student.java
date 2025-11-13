@@ -1,13 +1,14 @@
 package se.lexicon.model;
 
 public class Student {
+    private static int sequencer = 0;
     private int id;
     private String name;
     private String email;
     private String address;
 
-    public Student(int id, String name, String email, String address) {
-        setId(id);
+    public Student(String name, String email, String address) {
+        this.id = sequencer++;
         setName(name);
         setEmail(email);
         setAddress(address);
@@ -15,10 +16,6 @@ public class Student {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
