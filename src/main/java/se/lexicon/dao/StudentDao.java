@@ -1,6 +1,5 @@
-package se.lexicon.doa;
+package se.lexicon.dao;
 
-import se.lexicon.model.Course;
 import se.lexicon.model.Student;
 
 import java.util.List;
