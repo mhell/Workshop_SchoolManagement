@@ -67,7 +67,7 @@ class CourseDaoImplTest {
     void findByName_nonExistingName_returnsNull() {
         courseDao.save(course);
         List<Course> found = courseDao.findByName("nonexistent");
-        assertEquals(0, found.size(), "Should find 0 courses");
+        assertTrue(found.isEmpty(), "Should find 0 courses");
     }
 
     @Test

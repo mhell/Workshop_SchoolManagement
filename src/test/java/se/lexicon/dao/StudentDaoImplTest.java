@@ -66,7 +66,7 @@ class StudentDaoImplTest {
     void findByName_nonExistingName_returnEmpty() {
         studentDao.save(student);
         List<Student> found = studentDao.findByName("nonexistent");
-        assertEquals(0, found.size(), "Should find 0 students");
+        assertTrue(found.isEmpty(), "Should find 0 students");
     }
 
     @Test
