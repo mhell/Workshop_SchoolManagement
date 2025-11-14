@@ -91,7 +91,21 @@ class StudentDaoImplTest {
     }
 
     @Test
-    void delete() {
+    void delete_studentexist_returntrue() {
+        studentDao.save(student);
+        boolean result = studentDao.delete(student);
+        assertTrue(result);
+    }
 
+    @Test
+    void delete_studentdontexist_returnfalse() {
+        boolean result = studentDao.delete(student);
+        assertFalse(result);
+    }
+
+    @Test
+    void delete_studentnull_throwIllegalArgumentException() {
+        Executable action = () -> studentDao.delete(null);
+        assertThrows(IllegalArgumentException.class, action, "Should throw when null");
     }
 }

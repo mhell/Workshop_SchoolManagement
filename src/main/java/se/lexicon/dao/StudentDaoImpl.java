@@ -62,6 +62,9 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public boolean delete(Student student) {
+        if (student == null) {
+            throw new IllegalArgumentException("Student is null");
+        }
         return students.remove(student);
     }
 }
