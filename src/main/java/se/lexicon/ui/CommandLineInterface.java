@@ -126,7 +126,7 @@ public class CommandLineInterface {
                 registerStudent();
                 break;
             case "2":
-                removeStudent();
+                unregisterStudent();
                 break;
             case "0":
                 mainMenu();
@@ -167,7 +167,7 @@ public class CommandLineInterface {
                 "' updated with following students " + course.getStudents());
     }
 
-    private void removeStudent() {
+    private void unregisterStudent() {
         System.out.print("Enter course id: ");
         Course course;
         try {
@@ -281,7 +281,7 @@ public class CommandLineInterface {
                     if (c != null) coursesFound.add(c);
                 } catch (RuntimeException e) {
                     System.out.println("Error: " + e.getMessage());
-                    searchStudents();
+                    searchCourses();
                     return;
                 }
                 break;
@@ -296,7 +296,7 @@ public class CommandLineInterface {
                     coursesFound.addAll(courseDao.findByDate(startDate));
                 } catch (RuntimeException e) {
                     System.out.println("Error: " + e.getMessage());
-                    newCourse();
+                    searchCourses();
                     return;
                 }
                 break;
@@ -308,13 +308,120 @@ public class CommandLineInterface {
                 return;
         }
         System.out.println("Search result: " + coursesFound);
-        searchStudents();
+        searchCourses();
     }
 
     //endregion
     //region <update>
 
     private void update() {
+        System.out.print("Edit students and courses : \n" +
+                "1. Edit students \n" +
+                "2. Edit courses \n" +
+                "0. Main menu \n" +
+                "> ");
+
+        switch (scanner.nextLine()) {
+            case "1":
+                editStudents();
+                break;
+            case "2":
+                editCourses();
+                break;
+            case "0":
+                mainMenu();
+                return;
+        }
+        update();
+    }
+
+    private void editStudents() {
+        System.out.print("Enter student id to edit: ");
+        Student student;
+        try {
+            student = studentDao.findById(Integer.parseInt(scanner.nextLine()));
+            if (student == null) throw new RuntimeException("Student not found");
+        } catch (RuntimeException e) {
+            System.out.println("Error: " + e.getMessage());
+            update();
+            return;
+        }
+        System.out.print("Edit " + student + ": \n" +
+                "1. Change name \n" +
+                "2. Change email \n" +
+                "3. Change address \n" +
+                "0. Edit manu \n" +
+                "> ");
+
+        switch (scanner.nextLine()) {
+            case "1":
+                System.out.print("Enter new name: ");
+                student.setName(scanner.nextLine());
+                break;
+            case "2":
+                System.out.print("Enter new email: ");
+                student.setEmail(scanner.nextLine());
+                break;
+            case "3":
+                System.out.print("Enter new address: ");
+                student.setAddress(scanner.nextLine());
+                break;
+            case "0":
+                update();
+                return;
+        }
+        System.out.println("Student changed to: " + student);
+    }
+
+    private void editCourses() {
+        System.out.print("Enter course id to edit: ");
+        Course course;
+        try {
+            course = courseDao.findById(Integer.parseInt(scanner.nextLine()));
+            if (course == null) throw new RuntimeException("Course not found");
+        } catch (RuntimeException e) {
+            System.out.println("Error: " + e.getMessage());
+            update();
+            return;
+        }
+        System.out.print("Edit " + course + ": \n" +
+                "1. Change course name \n" +
+                "2. Change start date \n" +
+                "3. Change duration \n" +
+                "0. Edit manu \n" +
+                "> ");
+
+        switch (scanner.nextLine()) {
+            case "1":
+                System.out.print("Enter new name: ");
+                course.setCourseName(scanner.nextLine());
+                break;
+            case "2":
+                System.out.print("Enter new start date (e.g. 2007-12-03): ");
+                try {
+                    LocalDate startDate = LocalDate.parse(scanner.nextLine());
+                    course.setStartDate(startDate);
+                } catch (RuntimeException e) {
+                    System.out.println("Error: " + e.getMessage());
+                    update();
+                    return;
+                }
+                break;
+            case "3":
+                System.out.print("Enter new duration: ");
+                try {
+                    course.setWeekDuration(Integer.parseInt(scanner.nextLine()));
+                } catch (RuntimeException e) {
+                    System.out.println("Error: " + e.getMessage());
+                    update();
+                    return;
+                }
+                break;
+            case "0":
+                update();
+                return;
+        }
+        System.out.println("Course changed to: " + course);
     }
 
     //endregion
