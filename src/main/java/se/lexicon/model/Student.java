@@ -55,4 +55,14 @@ public class Student {
     public int hashCode() {
         return Objects.hash(getId(), getName(), getEmail(), getAddress());
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }

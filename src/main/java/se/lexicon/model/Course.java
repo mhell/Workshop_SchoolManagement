@@ -83,4 +83,15 @@ public class Course {
     public int hashCode() {
         return Objects.hash(getId(), getCourseName(), getStartDate(), getWeekDuration(), getStudents());
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", courseName='" + courseName + '\'' +
+                ", startDate=" + startDate +
+                ", weekDuration=" + weekDuration +
+                ", students=" + students +
+                '}';
+    }
 }
