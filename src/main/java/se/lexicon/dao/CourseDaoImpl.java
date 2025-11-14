@@ -13,6 +13,11 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public Course save(Course course) {
+        if (courses.contains(course)) {
+            throw new RuntimeException("Student already added");
+        } else if (course == null) {
+            throw new IllegalArgumentException("Student is null");
+        }
         courses.add(course);
         return course;
     }
