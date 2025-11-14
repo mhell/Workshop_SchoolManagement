@@ -67,6 +67,6 @@ public class CourseDaoImpl implements CourseDao {
         if (courses == null) {
             throw new IllegalArgumentException("course is null");
         }
-        return courses.remove(courses);
+        return courses.remove(course);
     }
 }
