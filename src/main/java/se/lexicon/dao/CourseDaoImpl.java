@@ -39,11 +39,7 @@ public class CourseDaoImpl implements CourseDao {
                 courseFound.add(course);
             }
         }
-        if (!courseFound.isEmpty()) {
-            return courseFound;
-        } else {
-            return null;
-        }
+        return courseFound;
     }
 
     @Override

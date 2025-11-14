@@ -38,11 +38,7 @@ public class StudentDaoImpl implements StudentDao {
                 studentFound.add(student);
             }
         }
-        if (!studentFound.isEmpty()) {
-            return studentFound;
-        } else {
-            return null;
-        }
+        return studentFound;
     }
 
     @Override
