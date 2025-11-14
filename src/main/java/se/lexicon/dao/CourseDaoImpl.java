@@ -1,7 +1,6 @@
 package se.lexicon.dao;
 
 import se.lexicon.model.Course;
-import se.lexicon.model.Student;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class CourseDaoImpl implements CourseDao {
 
-    private List<Course> courses = new LinkedList<>();
+    private final List<Course> courses = new LinkedList<>();
 
     @Override
     public Course save(Course course) {
