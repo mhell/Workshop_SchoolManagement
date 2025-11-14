@@ -21,7 +21,7 @@ class StudentDaoImplTest {
     }
 
     @Test
-    void save_newstudent_returnstudent() {
+    void save_newStudent_returnStudent() {
         Student studentAdded = studentDao.save(student);
         assertEquals(student, studentAdded);
     }
@@ -40,71 +40,71 @@ class StudentDaoImplTest {
     }
 
     @Test
-    void findByEmail_emailexists_returnfirstfound() {
+    void findByEmail_emailExists_returnFirstFound() {
         studentDao.save(student);
         Student foundStudent = studentDao.findByEmail(email);
-        assertEquals(student, foundStudent);
+        assertEquals(student, foundStudent, "The email wasn't found");
     }
 
     @Test
-    void findByEmail_emaildontexist_returnnull() {
+    void findByEmail_emailDontExist_returnNull() {
         studentDao.save(student);
         Student foundStudent = studentDao.findByEmail("nonexistent");
-        assertNull(foundStudent);
+        assertNull(foundStudent, "Should return null");
     }
 
     @Test
-    void findByName_nameexists_returnallfound() {
+    void findByName_nameExists_returnAllFound() {
         studentDao.save(student);
         List<Student> studentsFound = studentDao.findByName(name);
-        assertEquals(1, studentsFound.size());
-        assertEquals(student, studentsFound.get(0));
+        assertEquals(1, studentsFound.size(), "Should find 1 student");
+        assertEquals(student, studentsFound.get(0), "Should find the added student");
     }
 
     @Test
-    void findByName_namedontexists_returnnull() {
+    void findByName_nameDontExists_returnNull() {
         studentDao.save(student);
         List<Student> foundStudents = studentDao.findByName("nonexistent");
-        assertNull(foundStudents);
+        assertNull(foundStudents, "Should return null");
     }
 
     @Test
-    void findById_idexists_returnfirstfound() {
+    void findById_idExists_returnFirstFound() {
         studentDao.save(student);
         Student foundStudent = studentDao.findById(student.getId());
-        assertEquals(student, foundStudent);
+        assertEquals(student, foundStudent, "The id wasn't found");
     }
 
     @Test
-    void findById_iddontexists_returnnull() {
+    void findById_idDontExists_returnNull() {
         studentDao.save(student);
         Student foundStudent = studentDao.findById(1);
-        assertNull(foundStudent);
+        assertNull(foundStudent, "Should return null");
     }
 
     @Test
-    void findAll_afteraddone_returnone() {
+    void findAll_afterAddOne_returNone() {
         studentDao.save(student);
         List<Student> studentsFound = studentDao.findAll();
-        assertEquals(1, studentsFound.size());
-        assertEquals(student, studentsFound.get(0));
+        assertEquals(1, studentsFound.size(), "Should find 1 student");
+        assertEquals(student, studentsFound.get(0), "Should find the added student");
     }
 
     @Test
-    void delete_studentexist_returntrue() {
+    void delete_studentExist_returnTrue() {
         studentDao.save(student);
         boolean result = studentDao.delete(student);
-        assertTrue(result);
+        assertTrue(result, "Should return true");
     }
 
     @Test
-    void delete_studentdontexist_returnfalse() {
+    void delete_studentDontExist_returnFalse() {
         boolean result = studentDao.delete(student);
-        assertFalse(result);
+        assertFalse(result, "Should return false");
     }
 
     @Test
-    void delete_studentnull_throwIllegalArgumentException() {
+    void delete_studentNull_throwIllegalArgumentException() {
         Executable action = () -> studentDao.delete(null);
         assertThrows(IllegalArgumentException.class, action, "Should throw when null");
     }
