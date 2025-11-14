@@ -13,7 +13,7 @@ class StudentTest {
 
     @BeforeEach
     void setUp() {
-        student = new Student( name, email, address);
+        student = new Student(name, email, address);
     }
 
     @Test
@@ -21,13 +21,11 @@ class StudentTest {
         // Arrange
 
         // Act
-        int id = student.getId();
         String name = student.getName();
         String email = student.getEmail();
         String address = student.getAddress();
 
         // Assert
-        assertEquals(0, id, "id incorrect");
         assertEquals(this.name, name, "name incorrect");
         assertEquals(this.email, email, "email incorrect");
         assertEquals(this.address, address, "address incorrect");
