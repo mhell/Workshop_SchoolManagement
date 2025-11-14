@@ -69,10 +69,11 @@ public class Course {
     public void unregister(Student student) {
         if (students.contains(student)) {
             students.remove(student);
-        }  else if (student == null) {
+        } else if (student == null) {
             throw new IllegalArgumentException("Student is null");
+        } else {
+            throw new RuntimeException("Student wasn't registered");
         }
-        throw new RuntimeException("Student wasn't registered");
     }
 
     @Override
