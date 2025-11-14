@@ -4,11 +4,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import se.lexicon.model.Student;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentDaoImplTest {
-    Student student = new Student("Name", "name@mailcom", "Address");
+    String name = "Name";
+    String email = "name@mailcom";
+    String address = "Address";
+    Student student = new Student(name, email, address);
     StudentDao studentDao;
 
     @BeforeEach
@@ -36,22 +40,58 @@ class StudentDaoImplTest {
     }
 
     @Test
-    void findByEmail() {
+    void findByEmail_emailexists_returnfirstfound() {
+        studentDao.save(student);
+        Student foundStudent = studentDao.findByEmail(email);
+        assertEquals(student, foundStudent);
     }
 
     @Test
-    void findByName() {
+    void findByEmail_emaildontexist_returnnull() {
+        studentDao.save(student);
+        Student foundStudent = studentDao.findByEmail("nonexistent");
+        assertNull(foundStudent);
     }
 
     @Test
-    void findById() {
+    void findByName_nameexists_returnallfound() {
+        studentDao.save(student);
+        List<Student> studentsFound = studentDao.findByName(name);
+        assertEquals(1, studentsFound.size());
+        assertEquals(student, studentsFound.get(0));
     }
 
     @Test
-    void findAll() {
+    void findByName_namedontexists_returnnull() {
+        studentDao.save(student);
+        List<Student> foundStudents = studentDao.findByName("nonexistent");
+        assertNull(foundStudents);
+    }
+
+    @Test
+    void findById_idexists_returnfirstfound() {
+        studentDao.save(student);
+        Student foundStudent = studentDao.findById(student.getId());
+        assertEquals(student, foundStudent);
+    }
+
+    @Test
+    void findById_iddontexists_returnnull() {
+        studentDao.save(student);
+        Student foundStudent = studentDao.findById(1);
+        assertNull(foundStudent);
+    }
+
+    @Test
+    void findAll_afteraddone_returnone() {
+        studentDao.save(student);
+        List<Student> studentsFound = studentDao.findAll();
+        assertEquals(1, studentsFound.size());
+        assertEquals(student, studentsFound.get(0));
     }
 
     @Test
     void delete() {
+
     }
 }
