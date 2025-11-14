@@ -64,6 +64,9 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public boolean delete(Course course) {
-        return courses.remove(course);
+        if (courses == null) {
+            throw new IllegalArgumentException("course is null");
+        }
+        return courses.remove(courses);
     }
 }
