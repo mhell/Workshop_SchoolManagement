@@ -57,4 +57,9 @@ class CourseTest {
         assertThrows(RuntimeException.class, action, "The student wasn't registered");
     }
 
+    @Test
+    void unregister_null_throwsRuntimeException() {
+        Executable action = () -> course.unregister(null);
+        assertThrows(IllegalArgumentException.class, action, "Should throw when null");
+    }
 }
