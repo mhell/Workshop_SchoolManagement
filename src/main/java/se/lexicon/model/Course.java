@@ -53,10 +53,6 @@ public class Course {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
     public void register(Student student) {
         if (students.contains(student)) {
             throw new RuntimeException("Student already registered");
