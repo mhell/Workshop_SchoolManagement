@@ -6,6 +6,8 @@ import se.lexicon.model.Course;
 import se.lexicon.model.Student;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CommandLineInterface {
@@ -134,16 +136,186 @@ public class CommandLineInterface {
     }
 
     private void registerStudent() {
+        System.out.print("Enter course id: ");
+        Course course;
+        try {
+            course = courseDao.findById(Integer.parseInt(scanner.nextLine()));
+            if (course == null) throw new RuntimeException("Course not found");
+        } catch (RuntimeException e) {
+            System.out.println("Error: " + e.getMessage());
+            courseRegistration();
+            return;
+        }
+        System.out.print("Enter student id to register: ");
+        Student student;
+        try {
+            student = studentDao.findById(Integer.parseInt(scanner.nextLine()));
+            if (student == null) throw new RuntimeException("Student not found");
+        } catch (RuntimeException e) {
+            System.out.println("Error: " + e.getMessage());
+            courseRegistration();
+            return;
+        }
+        try {
+            course.register(student);
+        } catch (RuntimeException e) {
+            System.out.println("Error: " + e.getMessage());
+            courseRegistration();
+            return;
+        }
+        System.out.println("Course '" + course.getCourseName() +
+                "' updated with following students " + course.getStudents());
     }
 
     private void removeStudent() {
+        System.out.print("Enter course id: ");
+        Course course;
+        try {
+            course = courseDao.findById(Integer.parseInt(scanner.nextLine()));
+            if (course == null) throw new RuntimeException("Course not found");
+        } catch (RuntimeException e) {
+            System.out.println("Error: " + e.getMessage());
+            courseRegistration();
+            return;
+        }
+        System.out.print("Enter student id to remove: ");
+        Student student;
+        try {
+            student = studentDao.findById(Integer.parseInt(scanner.nextLine()));
+            if (student == null) throw new RuntimeException("Student not found");
+        } catch (RuntimeException e) {
+            System.out.println("Error: " + e.getMessage());
+            courseRegistration();
+            return;
+        }
+        try {
+            course.unregister(student);
+        } catch (RuntimeException e) {
+            System.out.println("Error: " + e.getMessage());
+            courseRegistration();
+            return;
+        }
+        System.out.println("Course '" + course.getCourseName() +
+                "' updated with following students " + course.getStudents());
     }
 
     //endregion
+    //region <read>
 
     private void read() {
+        System.out.print("Search student and courses: \n" +
+                "1. Search for students \n" +
+                "2. Search for courses \n" +
+                "0. Main menu \n" +
+                "> ");
+
+        switch (scanner.nextLine()) {
+            case "1":
+                searchStudents();
+                break;
+            case "2":
+                searchCourses();
+                break;
+            case "0":
+                mainMenu();
+                return;
+        }
+        read();
     }
+
+    private void searchStudents() {
+        System.out.print("Search students: \n" +
+                "1. Search by id \n" +
+                "2. Search by name \n" +
+                "3. Search by email \n" +
+                "4. Find all \n" +
+                "0. Search menu \n" +
+                "> ");
+        List<Student> studentsFound = new LinkedList<>();
+        switch (scanner.nextLine()) {
+            case "1":
+                System.out.print("Enter id: ");
+                try {
+                    Student s = studentDao.findById(Integer.parseInt(scanner.nextLine()));
+                    if (s != null) studentsFound.add(s);
+                } catch (RuntimeException e) {
+                    System.out.println("Error: " + e.getMessage());
+                    searchStudents();
+                    return;
+                }
+                break;
+            case "2":
+                System.out.print("Enter name: ");
+                studentsFound.addAll(studentDao.findByName(scanner.nextLine()));
+                break;
+            case "3":
+                System.out.print("Enter email: ");
+                Student s = studentDao.findByEmail(scanner.nextLine());
+                if (s != null) studentsFound.add(s);
+                break;
+            case "4":
+                studentsFound.addAll(studentDao.findAll());
+                break;
+            case "0":
+                read();
+                return;
+        }
+        System.out.println("Search result: " + studentsFound);
+        searchStudents();
+    }
+
+    private void searchCourses() {
+        System.out.print("Search courses: \n" +
+                "1. Search by id \n" +
+                "2. Search by course name \n" +
+                "3. Search by start date \n" +
+                "4. Find all \n" +
+                "0. Search menu \n" +
+                "> ");
+        List<Course> coursesFound = new LinkedList<>();
+        switch (scanner.nextLine()) {
+            case "1":
+                System.out.print("Enter id: ");
+                try {
+                    Course c = courseDao.findById(Integer.parseInt(scanner.nextLine()));
+                    if (c != null) coursesFound.add(c);
+                } catch (RuntimeException e) {
+                    System.out.println("Error: " + e.getMessage());
+                    searchStudents();
+                    return;
+                }
+                break;
+            case "2":
+                System.out.print("Enter course name: ");
+                coursesFound.addAll(courseDao.findByName(scanner.nextLine()));
+                break;
+            case "3":
+                System.out.print("Enter start date (e.g. 2007-12-03): ");
+                try {
+                    LocalDate startDate = LocalDate.parse(scanner.nextLine());
+                    coursesFound.addAll(courseDao.findByDate(startDate));
+                } catch (RuntimeException e) {
+                    System.out.println("Error: " + e.getMessage());
+                    newCourse();
+                    return;
+                }
+                break;
+            case "4":
+                coursesFound.addAll(courseDao.findAll());
+                break;
+            case "0":
+                read();
+                return;
+        }
+        System.out.println("Search result: " + coursesFound);
+        searchStudents();
+    }
+
+    //endregion
+    //region <update>
 
     private void update() {
     }
+
+    //endregion
 }
