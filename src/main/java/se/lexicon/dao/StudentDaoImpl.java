@@ -11,6 +11,11 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public Student save(Student student) {
+        if (students.contains(student)) {
+            throw new RuntimeException("Student already added");
+        } else if (student == null) {
+            throw new IllegalArgumentException("Student is null");
+        }
         students.add(student);
         return student;
     }
