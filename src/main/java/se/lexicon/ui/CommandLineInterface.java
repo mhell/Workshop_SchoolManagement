@@ -11,13 +11,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CommandLineInterface {
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
     private final StudentDao studentDao;
     private final CourseDao courseDao;
 
-    public CommandLineInterface(StudentDao studentDao, CourseDao courseDao) {
+    public CommandLineInterface(StudentDao studentDao, CourseDao courseDao, Scanner scanner) {
         this.studentDao = studentDao;
         this.courseDao = courseDao;
+        this.scanner = scanner;
     }
 
     public void start() {

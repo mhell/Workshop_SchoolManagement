@@ -8,11 +8,14 @@ import se.lexicon.ui.CommandLineInterface;
 
 import java.util.Scanner;
 
+//TODO: Service layer: Business logic (remove student from dao removes from all courses)
+
 public class Main {
     public static void main(String[] args) {
         StudentDao studentDao = new StudentDaoImpl();
         CourseDao courseDao = new CourseDaoImpl();
-        CommandLineInterface cli = new CommandLineInterface(studentDao, courseDao);
+        Scanner scanner= new Scanner(System.in);
+        CommandLineInterface cli = new CommandLineInterface(studentDao, courseDao, scanner);
         cli.start();
     }
 }
